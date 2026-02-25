@@ -19,7 +19,7 @@ jobs:
           SUBMITTED="submitted-config.txt"
           BASE="base-config.txt"
 
-          if grep -xF -f "$BASE" "$SUBMITTED"; then
+          if grep -Fxf "$BASE" "$SUBMITTED"; then
             echo "Line found."
             echo "found=true" >> $GITHUB_OUTPUT
           else
