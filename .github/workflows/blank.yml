@@ -17,7 +17,7 @@ jobs:
         id: check_line
         run: |
           SUBMITTED="submitted-config.txt"
-          BASE="hostname DSW1"
+          BASE="base-config.txt"
 
           if grep -Fxq "$BASE" "$SUBMITTED"; then
             echo "Line found."
