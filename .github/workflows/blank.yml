@@ -16,10 +16,10 @@ jobs:
       - name: Check if file contains specific line
         id: check_line
         run: |
-          FILE_PATH="submitted-config.txt"
-          SEARCH_TEXT="hostname DSW1"
+          SUBMITTED="submitted-config.txt"
+          BASE="hostname DSW1"
 
-          if grep -Fxq "$SEARCH_TEXT" "$FILE_PATH"; then
+          if grep -Fxq "$BASE" "$SUBMITTED"; then
             echo "Line found."
             echo "found=true" >> $GITHUB_OUTPUT
           else
@@ -30,6 +30,10 @@ jobs:
       - name: Run only if line exists
         if: steps.check_line.outputs.found == 'true'
         run: echo "✅ The line exists in the file."
+
+      - name: Run only if line not exists
+        if: steps.check_line.outputs.found == 'false'
+        run: echo "❌ The line exists in the file."
 
       - name: Run only if line does NOT exist
         if: steps.check_line.outputs.found == 'false'
