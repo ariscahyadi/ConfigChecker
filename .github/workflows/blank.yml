@@ -1,27 +1,36 @@
-name: Compare Configuration
+name: Check File Contains Line
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  compare-strings:
+  check-file:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      # Step 1: Produce some output
-      - name: Read Submitted Config
-        id: submitted
-        run: |
-          more submitted-config.txt 
-          
-      # Step 2: Compare network configuration
-      - name: read Base Config
-        id: base
-        run: |
-          more base-config.txt
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # Step 2: Compare network configuration
-      - name: Compare with base config
-        if: ${{ steps.submitted.outputs.result == steps.base.outputs.result }}
-        run: echo "The Configuration Matches"
+      - name: Check if file contains specific line
+        id: check_line
+        run: |
+          FILE_PATH="submitted-config.txt"
+          SEARCH_TEXT="hostname DSW1"
+
+          if grep -Fxq "$SEARCH_TEXT" "$FILE_PATH"; then
+            echo "Line found."
+            echo "found=true" >> $GITHUB_OUTPUT
+          else
+            echo "Line not found."
+            echo "found=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run only if line exists
+        if: steps.check_line.outputs.found == 'true'
+        run: echo "✅ The line exists in the file."
+
+      - name: Run only if line does NOT exist
+        if: steps.check_line.outputs.found == 'false'
+        run: echo "❌ The line does not exist in the file."
