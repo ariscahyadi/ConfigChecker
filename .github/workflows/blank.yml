@@ -12,9 +12,15 @@ jobs:
       - name: Read Submitted Config
         id: submitted
         run: |
-          more submitted-config.txt >> $GITHUB_OUTPUT
+          more submitted-config.txt 
+          
+      # Step 2: Compare network configuration
+      - name: read Base Config
+        id: base
+        run: |
+          more base-config.txt
 
       # Step 2: Compare network configuration
       - name: Compare with base config
-        if: ${{ steps.submitted.outputs.result == 'hello' }}
-        run: echo "The string matches 'hello'!"
+        if: ${{ steps.submitted.outputs.result == steps.base.outputs.result }}
+        run: echo "The Configuration Matches"
