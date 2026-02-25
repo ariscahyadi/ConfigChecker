@@ -7,21 +7,18 @@ on:
 jobs:
   compare-strings:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
     steps:
       # Step 1: Produce some output
       - name: Read Submitted Config
         id: submitted
         run: |
-          more submitted-config.txt 
+          more ./submitted-config.txt 
           
       # Step 2: Compare network configuration
       - name: read Base Config
         id: base
         run: |
-          more base-config.txt
+          more ./base-config.txt
 
       # Step 2: Compare network configuration
       - name: Compare with base config
