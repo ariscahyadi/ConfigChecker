@@ -15,4 +15,3 @@ line vty 5 31
  login local
  transport input ssh
 !
-hello
