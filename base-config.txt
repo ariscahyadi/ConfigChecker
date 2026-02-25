@@ -1,0 +1,17 @@
+!
+hostname DSW1
+!
+interface GigabitEthernet0/0
+  ip address 10.200.0.4 255.255.255.0
+!
+service password-encryption
+username sitadmin secret 9 $9$mbcsIHc2bApgyE$KeKm44lxudz6H9O6aZnARPcn0DTF7v/OBOJl1Ilitd2
+enable secret 9 $9$ocLVkE5ndcOx7k$LyAQFid2oAVO8l6grcrdvPM8YQFk1sF9YsqfZPWzaMI
+!
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 31
+ login local
+ transport input ssh
+!
