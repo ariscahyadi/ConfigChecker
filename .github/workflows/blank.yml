@@ -13,13 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check if file contains specific line
+      - name: Check submitted against base config
         id: check_line
         run: |
           SUBMITTED="submitted-config.txt"
           BASE="base-config.txt"
 
-          if grep -Fxq "$BASE" "$SUBMITTED"; then
+          if grep -Ff "$BASE" "$SUBMITTED"; then
             echo "Line found."
             echo "found=true" >> $GITHUB_OUTPUT
           else
@@ -27,13 +27,13 @@ jobs:
             echo "found=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Run only if line exists
+      - name: Run only base config exists
         if: steps.check_line.outputs.found == 'true'
         run: echo "✅ The line exists in the file."
 
-      - name: Run only if line not exists
+      - name: Run only if base config not exists
         if: steps.check_line.outputs.found == 'false'
-        run: echo "❌ The line exists in the file."
+        run: echo "❌ The line exists in not the file."
 
       - name: Run only if line does NOT exist
         if: steps.check_line.outputs.found == 'false'
