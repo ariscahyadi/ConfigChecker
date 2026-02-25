@@ -7,6 +7,9 @@ on:
 jobs:
   compare-strings:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
     steps:
       # Step 1: Produce some output
       - name: Read Submitted Config
