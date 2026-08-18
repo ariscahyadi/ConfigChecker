@@ -11,7 +11,6 @@ jobs:
         with:
           base: main
           compare: rack1e
-          github_token: ${{ secrets.GITHUB_TOKEN }}
       # Make use of the result with COMPARE_RESULT_SAME env variable
       - name: 'Result'
         run: echo Result is $COMPARE_RESULT_SAME
