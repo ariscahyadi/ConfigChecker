@@ -1,0 +1,32 @@
+!
+interface GigabitEthernet1/0/1
+ switchport trunk allowed vlan 1,10,20
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/2
+ switchport trunk allowed vlan 1,10,20
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/3
+ no switchport
+ ip address 10.10.10.1 255.255.255.248
+!
+interface GigabitEthernet1/0/4
+ no switchport
+ ip address 10.10.10.29 255.255.255.248
+!
+interface Vlan10
+ ip address 192.168.10.101 255.255.252.0
+ ip helper-address 10.10.10.30
+ standby 0 ip 192.168.10.100
+!
+interface Vlan20
+ ip address 192.168.20.201 255.255.255.224
+ ip helper-address 10.10.10.30
+ standby 0 ip 192.168.20.200
+!
+router ospf 1
+ redistribute connected
+ network 10.10.10.0 0.0.0.7 area 0
+ network 10.10.10.24 0.0.0.7 area 0
+!
